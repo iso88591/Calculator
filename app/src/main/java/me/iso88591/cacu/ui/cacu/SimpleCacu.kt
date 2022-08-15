@@ -72,9 +72,11 @@ fun SimpleCacu() {
 
     //屏幕宽度 - 每个块的左右 - 最外层的左右
     val minSide = min(configuration.screenWidthDp, configuration.screenHeightDp)
-    val width = (minSide - 6 * spanCount - 10 * 2) / spanCount
+    val itemDivider = 5
+    val width = (minSide - itemDivider * 2 * spanCount - 10 * 2) / spanCount
 
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.background(Color(0xff010101))) {
         val lines = keys.size / spanCount
         repeat(lines) { column ->
             Row {
@@ -83,7 +85,7 @@ fun SimpleCacu() {
                     OneCacuButton(
                         key = key,
                         Modifier
-                            .padding(3.dp)
+                            .padding(itemDivider.dp)
                             .width(width.dp)
                             .height(width.dp)
                     )

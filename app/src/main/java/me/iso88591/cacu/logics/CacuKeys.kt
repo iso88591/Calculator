@@ -1,5 +1,6 @@
 package me.iso88591.cacu.logics
 
+import androidx.compose.ui.graphics.Color
 import me.iso88591.cacu.ui.cacu.CacuButtonStyle
 
 sealed class CacuKeys(
@@ -8,35 +9,76 @@ sealed class CacuKeys(
 ) {
 
     //归零键
-    object C : CacuKeys("C")
+    object C : CacuKeys("C",
+        CacuButtonStyle(
+            bgColor = Color(0xffA5A5A5),
+            textColor = Color(0xff030303),
+        ))
 
     //括号
-    object Brackets : CacuKeys("( )")
+    object Brackets : CacuKeys("( )",
+        CacuButtonStyle(
+            bgColor = Color(0xffA5A5A5),
+            textColor = Color(0xff030303),
+        ))
 
     //delete
-    object Delete : CacuKeys("Del")
+    object Delete : CacuKeys("Del",
+        CacuButtonStyle(
+            bgColor = Color(0xffA5A5A5),
+            textColor = Color(0xff030303),
+        ))
 
     //+
-    object Plus : CacuKeys("+")
+    object Plus : CacuKeys("+",CacuButtonStyle(
+        bgColor = Color(0xffFEA00A),
+        textColor = Color.White,
+    ))
 
     //-
-    object Reduce : CacuKeys("-")
+    object Reduce : CacuKeys("-",CacuButtonStyle(
+        bgColor = Color(0xffFEA00A),
+        textColor = Color.White,
+    ))
 
     //乘法
-    object Mul : CacuKeys("x")
+    object Mul : CacuKeys("x",CacuButtonStyle(
+        bgColor = Color(0xffFEA00A),
+        textColor = Color.White,
+    ))
 
     //除法
-    object Div : CacuKeys("/")
+    object Div : CacuKeys("/",CacuButtonStyle(
+        bgColor = Color(0xffFEA00A),
+        textColor = Color.White,
+    ))
 
     //求结果
-    object Result : CacuKeys("=")
+    object Result : CacuKeys("=",CacuButtonStyle(
+        bgColor = Color(0xffFEA00A),
+        textColor = Color.White,
+    ))
 
     //百分号
-    object Percent : CacuKeys("%")
+    object Percent : CacuKeys("%",
+        CacuButtonStyle(
+            bgColor = Color(0xffA5A5A5),
+            textColor = Color(0xff030303),
+        ))
 
-    object Point : CacuKeys(".")
+    object Point : CacuKeys(".",
+        CacuButtonStyle(
+            bgColor = Color(0xff333333),
+            textColor = Color.White,
+        ))
 
     //数字
-    class Num(val number: Number) : CacuKeys("${number}")
+    class Num(val number: Number) : CacuKeys(
+        "${number}",
+        CacuButtonStyle(
+            bgColor = Color(0xff333333),
+            textColor = Color.White,
+            )
+    )
 
 }
