@@ -1,23 +1,20 @@
 package me.iso88591.cacu.ui.cacu
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.iso88591.cacu.logics.CacuKeys
@@ -37,8 +34,23 @@ private fun PreViewSimpleCacu1() {
  */
 @Composable
 private fun SimpleCacuScreen(text: String, modifier: Modifier = Modifier) {
-    Box(modifier = modifier) {
-        Text(text = text, color = Color.White, textAlign = TextAlign.Right, fontSize = 18.sp)
+    LazyColumn(
+        modifier = modifier
+//            .background(Color.Blue)
+        ,
+        reverseLayout = true
+    ) {
+        item {
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = text,
+                textAlign = TextAlign.End,
+                color = Color.White,
+                fontSize = 75.sp,
+                fontStyle = FontStyle.Normal,
+            )
+        }
+
     }
 }
 
@@ -65,7 +77,7 @@ private fun SimpleHorizontalCacu(
             text = showText,
             modifier = Modifier
                 .fillMaxHeight(1f)
-                .weight(1f)
+                .weight(1f, true)
         )
 
         val lines = keys.size / spanCount
@@ -114,7 +126,7 @@ private fun SimpleVerticalCacu(
             text = showText,
             modifier = Modifier
                 .fillMaxWidth(1f)
-                .wrapContentHeight()
+                .weight(1f, true)
         )
 
         val lines = keys.size / spanCount
@@ -213,7 +225,7 @@ fun SimpleCacu(
     }
     val width = (minSide - itemDivider * 2 * sides - 10 * 2) / sides
 
-    if (orientation == Orientation.Vertical) {
+//    if (orientation == Orientation.Vertical) {
         SimpleVerticalCacu(
             width = width,
             spanCount = spanCount,
@@ -223,46 +235,35 @@ fun SimpleCacu(
             onKeyDown = onKeyDown
         )
 
-    } else {
-        SimpleHorizontalCacu(
-            width = width,
-            spanCount = spanCount,
-            keys = keys,
-            itemDivider = itemDivider,
-            showText = showText,
-            onKeyDown = onKeyDown
-        )
-
-    }
-
-}
-
-data class CacuButtonStyle(
-    val bgColor: Color = Color.Black,
-    val textSize: TextUnit = 30.sp,
-    val textColor: Color = Color.White
-) {
+//    } else {
+//        SimpleHorizontalCacu(
+//            width = width,
+//            spanCount = spanCount,
+//            keys = keys,
+//            itemDivider = itemDivider,
+//            showText = showText,
+//            onKeyDown = onKeyDown
+//        )
+//
+//    }
 
 }
+
+//data class CacuButtonStyle(
+//    val bgColor: Color = Color.Black,
+//    val textSize: TextUnit = 30.sp,
+//    val textColor: Color = Color.White
+//) {
+//
+//}
 
 @Composable
 private fun OneCacuButton(
     key: CacuKeys,
     modifier: Modifier = Modifier
 ) {
-    Box(
+    key.Show(
         modifier = modifier
-            .background(
-                key.style.bgColor, RoundedCornerShape(1000.dp)
-            ),
-        contentAlignment = Alignment.Center
-    ) {
-
-        Text(
-            text = key.key,
-            fontSize = key.style.textSize,
-            color = key.style.textColor,
-        )
-
-    }
+            .clip(RoundedCornerShape(1000.dp))
+    )
 }
