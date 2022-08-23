@@ -20,160 +20,162 @@ import androidx.compose.ui.unit.sp
  *
  */
 sealed class CacuKeys(
+    val simpleText: String = "",
+    val spanCount: Int = 1,
     val keyCode: Int = keyCodeGenerate++,
 //    val style: CacuButtonStyle = CacuButtonStyle(),
 ) {
 
-    companion object{
+    companion object {
 
         private var keyCodeGenerate = 0
 
     }
-
-    @Composable
-    protected fun Bg(
-        color: Color = Color(0xffA5A5A5),
-        modifier: Modifier,
-        content: @Composable () -> Unit
-    ) {
-        Box(
-            modifier = modifier
-                .background(color),
-            contentAlignment = Alignment.Center
-        ) {
-            content()
-        }
-    }
-
-    @Composable
-    protected fun SimpleText(
-        text: String,
-        fontSize:TextUnit = 30.sp,
-        color: Color = Color.Black
-    ) {
-        Text(
-            text = text,
-            fontSize = fontSize,
-            color = color,
-        )
-    }
-
-    @Composable
-    open fun Show(modifier: Modifier) {
-        Bg(modifier = modifier) {
-            SimpleText(text = "1",)
-        }
-    }
-
-    //text
-//    class Text(str: String) : CacuKeys(str)
-
-
-    //归零键
-    object C : CacuKeys(
-//        "C",
-//        CacuButtonStyle(
-//            bgColor = Color(0xffA5A5A5),
-//            textColor = Color(0xff030303),
-//        ),
-        0
-    )
-
-    //括号
-    object Brackets : CacuKeys(
-//        "( )",
-//        CacuButtonStyle(
-//            bgColor = Color(0xffA5A5A5),
-//            textColor = Color(0xff030303),
-//        ),
-        1
-    )
-
-    //delete
-    object Delete : CacuKeys(
-//        "Del",
-//        CacuButtonStyle(
-//            bgColor = Color(0xffA5A5A5),
-//            textColor = Color(0xff030303),
-//        ),
-        2
-    )
-
-    //+
-    object Plus : CacuKeys(
-//        "+",
-//        CacuButtonStyle(
-//            bgColor = Color(0xffFEA00A),
-//            textColor = Color.White,
-//        ),
-        3
-    )
-
-    //-
-    object Reduce : CacuKeys(
-//        "-",
-//        CacuButtonStyle(
-//            bgColor = Color(0xffFEA00A),
-//            textColor = Color.White,
-//        ),
-        4
-    )
-
-    //乘法
-    object Mul : CacuKeys(
-//        "x",
-//        CacuButtonStyle(
-//            bgColor = Color(0xffFEA00A),
-//            textColor = Color.White,
-//        ),
-        5
-    )
-
-    //除法
-    object Div : CacuKeys(
-//        "/",
-//        CacuButtonStyle(
-//            bgColor = Color(0xffFEA00A),
-//            textColor = Color.White,
-//        ),
-        6
-    )
-
-    //求结果
-    object Result : CacuKeys(
-//        "=", CacuButtonStyle(
-//            bgColor = Color(0xffFEA00A),
-//            textColor = Color.White,
-//        ),
-        7
-    )
-
-    //百分号
-    object Percent : CacuKeys(
-//        "%",
-//        CacuButtonStyle(
-//            bgColor = Color(0xffA5A5A5),
-//            textColor = Color(0xff030303),
-//        ),
-        8
-    )
-
-    object Point : CacuKeys(
-//        ".",
-//        CacuButtonStyle(
-//            bgColor = Color(0xff333333),
-//            textColor = Color.White,
-//        ),
-        9
-    )
-
-    //数字
-    class Num(val number: Number) : CacuKeys(
-//        "${number}",
-//        CacuButtonStyle(
-//            bgColor = Color(0xff333333),
-//            textColor = Color.White,
+//
+//    @Composable
+//    protected fun Bg(
+//        color: Color = Color(0xffA5A5A5),
+//        modifier: Modifier,
+//        content: @Composable () -> Unit
+//    ) {
+//        Box(
+//            modifier = modifier
+//                .background(color),
+//            contentAlignment = Alignment.Center
+//        ) {
+//            content()
+//        }
+//    }
+//
+//    @Composable
+//    protected fun SimpleText(
+//        text: String,
+//        fontSize: TextUnit = 30.sp,
+//        color: Color = Color.Black
+//    ) {
+//        Text(
+//            text = text,
+//            fontSize = fontSize,
+//            color = color,
 //        )
-    )
+//    }
+//
+//    @Composable
+//    open fun Show(modifier: Modifier) {
+//        Bg(modifier = modifier) {
+//            SimpleText(text = "1")
+//        }
+//    }
+//
+//    //text
+////    class Text(str: String) : CacuKeys(str)
+//
+//
+//    //归零键
+//    object C : CacuKeys(
+////        "C",
+////        CacuButtonStyle(
+////            bgColor = Color(0xffA5A5A5),
+////            textColor = Color(0xff030303),
+////        ),
+//        0
+//    )
+//
+//    //括号
+//    object Brackets : CacuKeys(
+////        "( )",
+////        CacuButtonStyle(
+////            bgColor = Color(0xffA5A5A5),
+////            textColor = Color(0xff030303),
+////        ),
+//        1
+//    )
+//
+//    //delete
+//    object Delete : CacuKeys(
+////        "Del",
+////        CacuButtonStyle(
+////            bgColor = Color(0xffA5A5A5),
+////            textColor = Color(0xff030303),
+////        ),
+//        2
+//    )
+//
+//    //+
+//    object Plus : CacuKeys(
+////        "+",
+////        CacuButtonStyle(
+////            bgColor = Color(0xffFEA00A),
+////            textColor = Color.White,
+////        ),
+//        3
+//    )
+//
+//    //-
+//    object Reduce : CacuKeys(
+////        "-",
+////        CacuButtonStyle(
+////            bgColor = Color(0xffFEA00A),
+////            textColor = Color.White,
+////        ),
+//        4
+//    )
+//
+//    //乘法
+//    object Mul : CacuKeys(
+////        "x",
+////        CacuButtonStyle(
+////            bgColor = Color(0xffFEA00A),
+////            textColor = Color.White,
+////        ),
+//        5
+//    )
+//
+//    //除法
+//    object Div : CacuKeys(
+////        "/",
+////        CacuButtonStyle(
+////            bgColor = Color(0xffFEA00A),
+////            textColor = Color.White,
+////        ),
+//        6
+//    )
+//
+//    //求结果
+//    object Result : CacuKeys(
+////        "=", CacuButtonStyle(
+////            bgColor = Color(0xffFEA00A),
+////            textColor = Color.White,
+////        ),
+//        7
+//    )
+//
+//    //百分号
+//    object Percent : CacuKeys(
+////        "%",
+////        CacuButtonStyle(
+////            bgColor = Color(0xffA5A5A5),
+////            textColor = Color(0xff030303),
+////        ),
+//        8
+//    )
+//
+//    object Point : CacuKeys(
+////        ".",
+////        CacuButtonStyle(
+////            bgColor = Color(0xff333333),
+////            textColor = Color.White,
+////        ),
+//        9
+//    )
+//
+//    //数字
+//    class Num(val number: Number) : CacuKeys(
+////        "${number}",
+////        CacuButtonStyle(
+////            bgColor = Color(0xff333333),
+////            textColor = Color.White,
+////        )
+//    )
 
 }
