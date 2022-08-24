@@ -35,8 +35,8 @@ data class CacuButtonColor(
         val Dark = CacuButtonColor(
             numBg = Color(0xff333333),
             numColor = Color.White,
-            funcBg = Color(0xff333333),
-            funcColor = Color.Black,
+            funcBg = Color(0xffD4D4D2),
+            funcColor = Color(0xff1C1C1C),
 
             )
 
