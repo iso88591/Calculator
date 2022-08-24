@@ -17,6 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import me.iso88591.cacu.ui.theme.CacuButtonColor
 
 /**
  *
@@ -184,4 +185,13 @@ sealed class CacuKeys(
         "${number}", weight
     )
 
+}
+
+fun <T : CacuKeys> T.applyCacuPalete(
+    isFuncBtn: Boolean,
+    cacuColor: CacuButtonColor
+): T {
+    this.bgColor = if (isFuncBtn) cacuColor.funcBg else cacuColor.numBg
+    this.textColor = if (isFuncBtn) cacuColor.funcColor else cacuColor.numColor
+    return this
 }
