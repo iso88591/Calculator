@@ -1,67 +1,70 @@
 package me.iso88591.cacu
 
-import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.widget.LinearLayout
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.MeasurePolicy
 import androidx.compose.ui.platform.*
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Constraints
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.core.app.ActivityCompat
-import androidx.core.view.WindowCompat
 import me.iso88591.cacu.logics.CacuKeys
+import me.iso88591.cacu.ui.theme.CacuButtonColor
 //import me.iso88591.cacu.ui.cacu.SimpleCacu
 import me.iso88591.cacu.ui.theme.CacuTheme
+import me.iso88591.cacu.ui.theme.Local_MyPalete
+import me.iso88591.cacu.ui.theme.MyPalete
 
 class MainActivity : ComponentActivity() {
 
-    private fun SimpleVerticalKeys() = buildGridItems {
+    private fun <T : CacuKeys> T.applyCacuPalete(
+        isFuncBtn: Boolean,
+        cacuColor: CacuButtonColor
+    ): T {
+        this.bgColor = if (isFuncBtn) cacuColor.funcBg else cacuColor.numBg
+        this.textColor = if (isFuncBtn) cacuColor.funcColor else cacuColor.numColor
+        return this
+    }
+
+    private fun SimpleVerticalKeys(myPalete: MyPalete) = buildGridItems {
         listOf<CacuKeys>(
-            CacuKeys.C,
-            CacuKeys.PlusOrReduce,
-            CacuKeys.Percent,
+            CacuKeys.C.applyCacuPalete(true, myPalete.cacuButtonColor),
+            CacuKeys.PlusOrReduce.applyCacuPalete(true, myPalete.cacuButtonColor),
+            CacuKeys.Percent.applyCacuPalete(true, myPalete.cacuButtonColor),
             CacuKeys.Div,
 
-            CacuKeys.Num(7),
-            CacuKeys.Num(8),
-            CacuKeys.Num(9),
+            CacuKeys.Num(7).applyCacuPalete(false, myPalete.cacuButtonColor),
+            CacuKeys.Num(8).applyCacuPalete(false, myPalete.cacuButtonColor),
+            CacuKeys.Num(9).applyCacuPalete(false, myPalete.cacuButtonColor),
             CacuKeys.Mul,
 
-            CacuKeys.Num(4),
-            CacuKeys.Num(5),
-            CacuKeys.Num(6),
+            CacuKeys.Num(4).applyCacuPalete(false, myPalete.cacuButtonColor),
+            CacuKeys.Num(5).applyCacuPalete(false, myPalete.cacuButtonColor),
+            CacuKeys.Num(6).applyCacuPalete(false, myPalete.cacuButtonColor),
             CacuKeys.Reduce,
 
-            CacuKeys.Num(1),
-            CacuKeys.Num(2),
-            CacuKeys.Num(3),
+            CacuKeys.Num(1).applyCacuPalete(false, myPalete.cacuButtonColor),
+            CacuKeys.Num(2).applyCacuPalete(false, myPalete.cacuButtonColor),
+            CacuKeys.Num(3).applyCacuPalete(false, myPalete.cacuButtonColor),
             CacuKeys.Plus,
 
-            CacuKeys.Num(0,2),CacuKeys.Point, CacuKeys.Result
+            CacuKeys.Num(0, 2).applyCacuPalete(false, myPalete.cacuButtonColor),
+            CacuKeys.Point.applyCacuPalete(false, myPalete.cacuButtonColor), CacuKeys.Result
         ).forEach {
             item(it.spanCount) {
                 it.Show(modifier = Modifier)
@@ -76,10 +79,14 @@ class MainActivity : ComponentActivity() {
 //        WindowCompat.setDecorFitsSystemWindows(window,true)
 
         setContent {
-            CacuTheme {
+            var isDark by remember {
+                mutableStateOf(true)
+            }
+            CacuTheme(isDark) {
                 // A surface container using the 'background' color from the theme
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
 
@@ -92,14 +99,34 @@ class MainActivity : ComponentActivity() {
 
 //                    UseGrid()
 
-                    UseLayout(4,
-                        10,
-                        10,
+                    Column(
                         Modifier
-                            .background(Color(0xff010101))
-                            .padding(horizontal = 10.dp),
-                        remember { SimpleVerticalKeys() }
-                    )
+                    ) {
+
+                        Box(
+                            Modifier
+                                .fillMaxWidth()
+                                .weight(1f, true)
+                        ) {
+
+                            Button(onClick = { isDark = !isDark }) {
+                                Text(text = "改变主题")
+                            }
+
+                        }
+
+                        val myPalete = Local_MyPalete.current
+
+                        UseLayout(4,
+                            10,
+                            10,
+                            Modifier
+                                .wrapContentHeight()
+                                .padding(horizontal = 10.dp)
+                                .padding(bottom = 20.dp),
+                            remember(myPalete) { SimpleVerticalKeys(myPalete) }
+                        )
+                    }
 
                 }
             }
@@ -167,6 +194,7 @@ class MainActivity : ComponentActivity() {
                 val thisWidth =
                     (perWidth * scopeModel.weight + hGap.dp.roundToPx() * (scopeModel.weight - 1)).toInt()
                 val thisHeight = perHeight.toInt()
+
                 measurable.measure(
                     parentConstraints.copy(
                         minWidth = thisWidth,
@@ -178,7 +206,12 @@ class MainActivity : ComponentActivity() {
 
             }
 
-            layout(parentConstraints.maxWidth, parentConstraints.maxHeight) {
+            //垂直多少个
+            val columnCount = items.sumOf { it.weight } / spanCount
+            val contentHeightSum =
+                (columnCount * perHeight).toInt() + (columnCount - 1) * vGap.dp.roundToPx()
+
+            layout(parentConstraints.maxWidth, contentHeightSum) {
 
                 var start = 0
                 places.forEachIndexed { index, placeable ->

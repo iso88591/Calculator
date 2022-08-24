@@ -60,8 +60,8 @@ private fun SimpleText(
 sealed class CacuKeys(
     val simpleText: String = "",
     var spanCount: Int = 1,
-    val textColor: Color = Color.White,
-    val bgColor: Color = Color(0xff333333),
+    var textColor: Color = Color.White,
+    var bgColor: Color = Color.White,
     val keyCode: Int = keyCodeGenerate++,
 ) {
 
