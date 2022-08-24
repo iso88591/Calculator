@@ -17,7 +17,10 @@ import me.iso88591.cacu.ui.theme.CacuButtonColor
 import me.iso88591.cacu.ui.theme.Local_MyPalete
 import me.iso88591.cacu.ui.theme.MyPalete
 
-private fun SimpleVerticalKeys(myPalete: MyPalete) = buildGridItems {
+private fun SimpleVerticalKeys(
+    myPalete: MyPalete,
+    onKeyDown: (CacuKeys) -> Unit = {}
+) = buildGridItems {
     listOf<CacuKeys>(
         CacuKeys.C.applyCacuPalete(true, myPalete.cacuButtonColor),
         CacuKeys.PlusOrReduce.applyCacuPalete(true, myPalete.cacuButtonColor),
@@ -43,14 +46,18 @@ private fun SimpleVerticalKeys(myPalete: MyPalete) = buildGridItems {
         CacuKeys.Point.applyCacuPalete(false, myPalete.cacuButtonColor), CacuKeys.Result
     ).forEach {
         item(it.spanCount) {
-            it.Show(modifier = Modifier)
+            it.Show(modifier = Modifier.clickable {
+                onKeyDown(it)
+            })
         }
     }
 
 }
 
 @Composable
-fun SimpleVerticalCacu() {
+fun SimpleVerticalCacu(
+    onKeyDown: (CacuKeys) -> Unit = {}
+) {
 
     val myPalete = Local_MyPalete.current
 
@@ -61,7 +68,7 @@ fun SimpleVerticalCacu() {
             .wrapContentHeight()
             .padding(horizontal = 10.dp)
             .padding(bottom = 20.dp),
-        remember(myPalete) { SimpleVerticalKeys(myPalete) }
+        remember(myPalete) { SimpleVerticalKeys(myPalete, onKeyDown) }
     )
 
 }

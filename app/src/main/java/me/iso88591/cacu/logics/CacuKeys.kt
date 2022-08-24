@@ -34,9 +34,11 @@ private fun Bg(
     content: @Composable () -> Unit
 ) {
     Box(
-        modifier = modifier
+        modifier = Modifier
+            .background(color,RoundedCornerShape(1000.dp))
             .clip(RoundedCornerShape(1000.dp))
-            .background(color),
+            .then(modifier)
+        ,
         contentAlignment = Alignment.Center
     ) {
         content()

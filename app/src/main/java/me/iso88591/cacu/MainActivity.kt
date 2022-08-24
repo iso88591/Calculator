@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import me.iso88591.cacu.logics.CacuKeys
 import me.iso88591.cacu.ui.cacu.SimpleVerticalCacu
+import me.iso88591.cacu.ui.cacu.VerticalScreen
 import me.iso88591.cacu.ui.theme.CacuButtonColor
 //import me.iso88591.cacu.ui.cacu.SimpleCacu
 import me.iso88591.cacu.ui.theme.CacuTheme
@@ -50,14 +51,9 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
 
-//                    var screenText by remember {
-//                        mutableStateOf("")
-//                    }
-//                    SimpleCacu(screenText){
-////                        screenText += it.key
-//                    }
-
-//                    UseGrid()
+                    var screenText by remember {
+                        mutableStateOf("")
+                    }
 
                     Column(
                         Modifier
@@ -69,13 +65,17 @@ class MainActivity : ComponentActivity() {
                                 .weight(1f, true)
                         ) {
 
+                            VerticalScreen(text = screenText)
+
                             Button(onClick = { isDark = !isDark }) {
                                 Text(text = "改变主题")
                             }
 
                         }
 
-                        SimpleVerticalCacu()
+                        SimpleVerticalCacu{
+                            screenText += it.simpleText
+                        }
 
                     }
 
