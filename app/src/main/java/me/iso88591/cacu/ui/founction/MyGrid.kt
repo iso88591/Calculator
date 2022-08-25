@@ -41,7 +41,9 @@ fun MyGrid(
     vGap: Int = 0,
     hGap: Int = 0,
     modifier: Modifier = Modifier,
-    items: List<MyGridLayoutScopeModel>
+    items: List<MyGridLayoutScopeModel>,
+    perHeightFractions: Float = 1f,
+    verticalCount: Int = -1
 ) {
 
     Layout(measurePolicy = MeasurePolicy { measurables, parentConstraints ->
@@ -52,7 +54,11 @@ fun MyGrid(
         val perWidth =
             (parentConstraints.maxWidth - (spanCount - 1) * hGap.dp.roundToPx()) / spanCount.toFloat()
         //计算每一份的高度
-        val perHeight = perWidth
+        val perHeight = if (perHeightFractions == 0f && verticalCount != -1) {
+           (parentConstraints.maxHeight - (verticalCount - 1) * vGap.dp.roundToPx() )/ verticalCount.toFloat()
+        } else {
+            perWidth * perHeightFractions
+        }
 
         log("=======${perWidth}")
 
@@ -101,7 +107,6 @@ fun MyGrid(
         }
     }, modifier = modifier)
 }
-
 
 
 fun log(vararg args: Any?) {

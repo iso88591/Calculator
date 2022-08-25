@@ -39,10 +39,9 @@ private fun Bg(
 ) {
     Box(
         modifier = Modifier
-            .background(color,RoundedCornerShape(1000.dp))
+            .background(color, RoundedCornerShape(1000.dp))
             .clip(RoundedCornerShape(1000.dp))
-            .then(modifier)
-        ,
+            .then(modifier),
         contentAlignment = Alignment.Center
     ) {
         content()
@@ -78,7 +77,7 @@ sealed class CacuKeys(
 
     init {
 
-        colorState = CacuKeyColorState(textColor,bgColor)
+        colorState = CacuKeyColorState(textColor, bgColor)
 
     }
 
@@ -116,6 +115,8 @@ sealed class CacuKeys(
     }
 
     object None : CacuKeys("None")
+
+    class Text(str: String) : CacuKeys(str)
 
     //归零键
     object C : CacuKeys(
@@ -156,7 +157,7 @@ sealed class CacuKeys(
     )
 
     //+或者-
-    object PlusOrReduce:CacuKeys(
+    object PlusOrReduce : CacuKeys(
         "+/-",
         textColor = Color.Black,
         bgColor = Color(0xffA5A5A5)
@@ -199,15 +200,49 @@ sealed class CacuKeys(
         "${number}", weight
     )
 
+
+    companion object{
+        /**
+         *
+         * 为横屏拓展的
+         *
+         */
+        //左括号
+        val LeftBrackets = Text("(")
+        val RightBrackets = Text(")")
+
+        val Mc = Text("mc")
+
+        val mPlus = Text("m+")
+        val mReduce = Text("m-")
+        val mr = Text("mr")
+
+        // 2 nd
+        val nd2 = Text("2nd")
+
+        val x2  = Text("x^2")
+        val x3 = Text("x^3")
+
+        val xy = Text("x^y")
+        val yx = Text("y^x")
+        val `2x` = Text("2^x")
+
+        //x分之1
+        val `1Perx` = Text("1/x")
+        //x开2次根
+    }
+
+
+
 }
 
 fun <T : CacuKeys> T.applyCacuPalete(
     isFuncBtn: Boolean,
     palete: MyPalete
 ): T {
-    this.colorState = if (isFuncBtn){
+    this.colorState = if (isFuncBtn) {
         palete.cacuFuncButtonColor
-    }else{
+    } else {
         palete.cacuNumButtonColor
     }
     return this

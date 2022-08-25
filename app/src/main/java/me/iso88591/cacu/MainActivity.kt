@@ -1,5 +1,6 @@
 package me.iso88591.cacu
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.widget.LinearLayout
@@ -26,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import me.iso88591.cacu.logics.CacuKeys
 import me.iso88591.cacu.logics.KeyBoardInput
 import me.iso88591.cacu.logics.KeyBoardUiInput
+import me.iso88591.cacu.ui.cacu.SimpleHorizontalCacu
 import me.iso88591.cacu.ui.cacu.SimpleVerticalCacu
 import me.iso88591.cacu.ui.cacu.VerticalScreen
 import me.iso88591.cacu.ui.theme.*
@@ -33,6 +35,8 @@ import me.iso88591.cacu.ui.theme.*
 //import me.iso88591.cacu.ui.cacu.SimpleCacu
 
 class MainActivity : ComponentActivity() {
+
+    private fun isVertical() = resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,23 +65,46 @@ class MainActivity : ComponentActivity() {
                         Modifier
                     ) {
 
-                        Box(
-                            Modifier
-                                .fillMaxWidth()
-                                .weight(1f, true)
-                        ) {
+                        if (isVertical()){
 
-                            VerticalScreen(text = screenText)
+                            Box(
+                                Modifier
+                                    .fillMaxWidth()
+                                    .weight(1f, true)
+                            ) {
 
-                            Button(onClick = { isDark = !isDark }) {
-                                Text(text = "改变主题")
+                                VerticalScreen(text = screenText)
+
+                                Button(onClick = { isDark = !isDark }) {
+                                    Text(text = "改变主题")
+                                }
+
                             }
 
+                            SimpleVerticalCacu {
+                                screenText = input.onKeyDown(it)
+                            }
+                        }else{
+
+                            Box(
+                                Modifier
+                                    .fillMaxWidth()
+                                    .fillMaxHeight(0.25f)
+                            ) {
+
+                                VerticalScreen(text = screenText)
+
+                                Button(onClick = { isDark = !isDark }) {
+                                    Text(text = "改变主题")
+                                }
+
+                            }
+
+                            SimpleHorizontalCacu{
+                                screenText = input.onKeyDown(it)
+                            }
                         }
 
-                        SimpleVerticalCacu {
-                            screenText = input.onKeyDown(it)
-                        }
 
                     }
 
