@@ -13,7 +13,6 @@ import me.iso88591.cacu.logics.CacuKeys
 import me.iso88591.cacu.logics.applyCacuPalete
 import me.iso88591.cacu.ui.founction.MyGrid
 import me.iso88591.cacu.ui.founction.buildGridItems
-import me.iso88591.cacu.ui.theme.CacuButtonColor
 import me.iso88591.cacu.ui.theme.Local_MyPalete
 import me.iso88591.cacu.ui.theme.MyPalete
 
@@ -22,28 +21,28 @@ private fun SimpleVerticalKeys(
     onKeyDown: (CacuKeys) -> Unit = {}
 ) = buildGridItems {
     listOf<CacuKeys>(
-        CacuKeys.C.applyCacuPalete(true, myPalete.cacuButtonColor),
-        CacuKeys.PlusOrReduce.applyCacuPalete(true, myPalete.cacuButtonColor),
-        CacuKeys.Percent.applyCacuPalete(true, myPalete.cacuButtonColor),
+        CacuKeys.C.applyCacuPalete(true, myPalete),
+        CacuKeys.PlusOrReduce.applyCacuPalete(true, myPalete),
+        CacuKeys.Percent.applyCacuPalete(true, myPalete),
         CacuKeys.Div,
 
-        CacuKeys.Num(7).applyCacuPalete(false, myPalete.cacuButtonColor),
-        CacuKeys.Num(8).applyCacuPalete(false, myPalete.cacuButtonColor),
-        CacuKeys.Num(9).applyCacuPalete(false, myPalete.cacuButtonColor),
+        CacuKeys.Num(7).applyCacuPalete(false, myPalete),
+        CacuKeys.Num(8).applyCacuPalete(false, myPalete),
+        CacuKeys.Num(9).applyCacuPalete(false, myPalete),
         CacuKeys.Mul,
 
-        CacuKeys.Num(4).applyCacuPalete(false, myPalete.cacuButtonColor),
-        CacuKeys.Num(5).applyCacuPalete(false, myPalete.cacuButtonColor),
-        CacuKeys.Num(6).applyCacuPalete(false, myPalete.cacuButtonColor),
+        CacuKeys.Num(4).applyCacuPalete(false, myPalete),
+        CacuKeys.Num(5).applyCacuPalete(false, myPalete),
+        CacuKeys.Num(6).applyCacuPalete(false, myPalete),
         CacuKeys.Reduce,
 
-        CacuKeys.Num(1).applyCacuPalete(false, myPalete.cacuButtonColor),
-        CacuKeys.Num(2).applyCacuPalete(false, myPalete.cacuButtonColor),
-        CacuKeys.Num(3).applyCacuPalete(false, myPalete.cacuButtonColor),
+        CacuKeys.Num(1).applyCacuPalete(false, myPalete),
+        CacuKeys.Num(2).applyCacuPalete(false, myPalete),
+        CacuKeys.Num(3).applyCacuPalete(false, myPalete),
         CacuKeys.Plus,
 
-        CacuKeys.Num(0, 2).applyCacuPalete(false, myPalete.cacuButtonColor),
-        CacuKeys.Point.applyCacuPalete(false, myPalete.cacuButtonColor), CacuKeys.Result
+        CacuKeys.Num(0, 2).applyCacuPalete(false, myPalete),
+        CacuKeys.Point.applyCacuPalete(false, myPalete), CacuKeys.Result
     ).forEach {
         item(it.spanCount) {
             it.Show(modifier = Modifier.clickable {

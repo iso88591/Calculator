@@ -8,6 +8,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -17,7 +20,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import me.iso88591.cacu.ui.theme.CacuButtonColor
+import me.iso88591.cacu.ui.theme.CacuKeyColorState
+import me.iso88591.cacu.ui.theme.MyPalete
 
 /**
  *
@@ -63,24 +67,30 @@ private fun SimpleText(
 sealed class CacuKeys(
     val simpleText: String = "",
     var spanCount: Int = 1,
-    var textColor: Color = Color.White,
-    var bgColor: Color = Color.White,
-    val keyCode: Int = keyCodeGenerate++,
+    textColor: Color = Color.White,
+    bgColor: Color = Color.White,
+
+    //这玩意好像是多余的
+    val keyCode: Int = 0,
 ) {
 
-    companion object {
-        private var keyCodeGenerate = 0
+    var colorState by mutableStateOf<CacuKeyColorState>(CacuKeyColorState())
+
+    init {
+
+        colorState = CacuKeyColorState(textColor,bgColor)
+
     }
 
     @Composable
     open fun Show(modifier: Modifier) {
         Bg(
-            color = bgColor,
+            color = colorState.bgColor,
             modifier = modifier
         ) {
             SimpleText(
                 text = simpleText,
-                color = textColor
+                color = colorState.textColor
             )
         }
     }
@@ -104,6 +114,8 @@ sealed class CacuKeys(
         }
 
     }
+
+    object None : CacuKeys("None")
 
     //归零键
     object C : CacuKeys(
@@ -191,9 +203,12 @@ sealed class CacuKeys(
 
 fun <T : CacuKeys> T.applyCacuPalete(
     isFuncBtn: Boolean,
-    cacuColor: CacuButtonColor
+    palete: MyPalete
 ): T {
-    this.bgColor = if (isFuncBtn) cacuColor.funcBg else cacuColor.numBg
-    this.textColor = if (isFuncBtn) cacuColor.funcColor else cacuColor.numColor
+    this.colorState = if (isFuncBtn){
+        palete.cacuFuncButtonColor
+    }else{
+        palete.cacuNumButtonColor
+    }
     return this
 }

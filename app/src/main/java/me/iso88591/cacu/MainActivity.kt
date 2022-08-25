@@ -24,13 +24,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import me.iso88591.cacu.logics.CacuKeys
+import me.iso88591.cacu.logics.KeyBoardInput
+import me.iso88591.cacu.logics.KeyBoardUiInput
 import me.iso88591.cacu.ui.cacu.SimpleVerticalCacu
 import me.iso88591.cacu.ui.cacu.VerticalScreen
-import me.iso88591.cacu.ui.theme.CacuButtonColor
+import me.iso88591.cacu.ui.theme.*
+
 //import me.iso88591.cacu.ui.cacu.SimpleCacu
-import me.iso88591.cacu.ui.theme.CacuTheme
-import me.iso88591.cacu.ui.theme.Local_MyPalete
-import me.iso88591.cacu.ui.theme.MyPalete
 
 class MainActivity : ComponentActivity() {
 
@@ -38,11 +38,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
 //        WindowCompat.setDecorFitsSystemWindows(window,true)
+        var isDark by mutableStateOf(true)
+        val keyBoardInput = KeyBoardInput()
+        val input = KeyBoardUiInput(keyBoardInput){
+        }
 
         setContent {
-            var isDark by remember {
-                mutableStateOf(true)
-            }
+
             CacuTheme(isDark) {
                 // A surface container using the 'background' color from the theme
                 Surface(
@@ -52,7 +54,7 @@ class MainActivity : ComponentActivity() {
                 ) {
 
                     var screenText by remember {
-                        mutableStateOf("")
+                        mutableStateOf(keyBoardInput.emptyShow())
                     }
 
                     Column(
@@ -73,8 +75,8 @@ class MainActivity : ComponentActivity() {
 
                         }
 
-                        SimpleVerticalCacu{
-                            screenText += it.simpleText
+                        SimpleVerticalCacu {
+                            screenText = input.onKeyDown(it)
                         }
 
                     }
