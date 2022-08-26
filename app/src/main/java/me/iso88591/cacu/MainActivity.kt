@@ -24,9 +24,11 @@ import androidx.compose.ui.platform.*
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import me.iso88591.cacu.logics.CacuKeys
 import me.iso88591.cacu.logics.KeyBoardInput
 import me.iso88591.cacu.logics.KeyBoardUiInput
+import me.iso88591.cacu.logics.Local_CacuKey_Text_Size
 import me.iso88591.cacu.ui.cacu.SimpleHorizontalCacu
 import me.iso88591.cacu.ui.cacu.SimpleVerticalCacu
 import me.iso88591.cacu.ui.cacu.VerticalScreen
@@ -61,53 +63,64 @@ class MainActivity : ComponentActivity() {
                         mutableStateOf(keyBoardInput.emptyShow())
                     }
 
-                    Column(
-                        Modifier
-                    ) {
+                    CompositionLocalProvider(
 
-                        if (isVertical()){
-
-                            Box(
-                                Modifier
-                                    .fillMaxWidth()
-                                    .weight(1f, true)
-                            ) {
-
-                                VerticalScreen(text = screenText)
-
-                                Button(onClick = { isDark = !isDark }) {
-                                    Text(text = "改变主题")
-                                }
-
-                            }
-
-                            SimpleVerticalCacu {
-                                screenText = input.onKeyDown(it)
-                            }
+                        Local_CacuKey_Text_Size provides if (isVertical()){
+                            30.sp
                         }else{
-
-                            Box(
-                                Modifier
-                                    .fillMaxWidth()
-                                    .fillMaxHeight(0.25f)
-                            ) {
-
-                                VerticalScreen(text = screenText)
-
-                                Button(onClick = { isDark = !isDark }) {
-                                    Text(text = "改变主题")
-                                }
-
-                            }
-
-                            SimpleHorizontalCacu{
-                                screenText = input.onKeyDown(it)
-                            }
+                            15.sp
                         }
 
+                    ) {
+
+                        Column(
+                            Modifier
+                        ) {
+
+                            if (isVertical()){
+
+                                Box(
+                                    Modifier
+                                        .fillMaxWidth()
+                                        .weight(1f, true)
+                                ) {
+
+                                    VerticalScreen(text = screenText)
+
+                                    Button(onClick = { isDark = !isDark }) {
+                                        Text(text = "改变主题")
+                                    }
+
+                                }
+
+                                SimpleVerticalCacu {
+                                    screenText = input.onKeyDown(it)
+                                }
+                            }else{
+
+                                Box(
+                                    Modifier
+                                        .fillMaxWidth()
+                                        .fillMaxHeight(0.25f)
+                                ) {
+
+                                    VerticalScreen(text = screenText)
+
+                                    Button(onClick = { isDark = !isDark }) {
+                                        Text(text = "改变主题")
+                                    }
+
+                                }
+
+                                SimpleHorizontalCacu{
+                                    screenText = input.onKeyDown(it)
+                                }
+                            }
+
+
+                        }
 
                     }
-
                 }
             }
         }

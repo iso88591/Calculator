@@ -22,84 +22,59 @@ private fun SimpleHorizontalKeys(
     onKeyDown: (CacuKeys) -> Unit = {}
 ) = buildGridItems {
     listOf<CacuKeys>(
-        CacuKeys.LeftBrackets.applyCacuPalete(false, myPalete),
-        CacuKeys.RightBrackets.applyCacuPalete(false, myPalete),
-        CacuKeys.Mc.applyCacuPalete(false, myPalete),
-        CacuKeys.mPlus.applyCacuPalete(false, myPalete),
-        CacuKeys.mReduce.applyCacuPalete(false, myPalete),
-        CacuKeys.mr.applyCacuPalete(false, myPalete),
-        CacuKeys.C.applyCacuPalete(false, myPalete),
-        CacuKeys.PlusOrReduce.applyCacuPalete(false, myPalete),
-        CacuKeys.Percent.applyCacuPalete(false, myPalete),
+        //=========================1
+        CacuKeys.x2.applyCacuPalete(false, myPalete),
+        CacuKeys.xy.applyCacuPalete(false, myPalete),
+        CacuKeys.ex.applyCacuPalete(false, myPalete),
+        CacuKeys.`10x`.applyCacuPalete(false, myPalete),
+
+        CacuKeys.C.applyCacuPalete(true, myPalete),
+        CacuKeys.PlusOrReduce.applyCacuPalete(true, myPalete),
+        CacuKeys.Percent.applyCacuPalete(true, myPalete),
         CacuKeys.Div,
 
+        //=========================2
+        CacuKeys.`1Perx`.applyCacuPalete(false, myPalete),
+        CacuKeys.root2.applyCacuPalete(false, myPalete),
+        CacuKeys.root3.applyCacuPalete(false, myPalete),
+        CacuKeys.rooty.applyCacuPalete(false, myPalete),
 
-        CacuKeys.nd2.applyCacuPalete(false, myPalete),
-        CacuKeys.x2.applyCacuPalete(false, myPalete),
-        CacuKeys.x3.applyCacuPalete(false, myPalete),
-        CacuKeys.xy.applyCacuPalete(false, myPalete),
-        CacuKeys.yx.applyCacuPalete(false, myPalete),
-        CacuKeys.`2x`.applyCacuPalete(false, myPalete),
         CacuKeys.Num(7).applyCacuPalete(false, myPalete),
         CacuKeys.Num(8).applyCacuPalete(false, myPalete),
         CacuKeys.Num(9).applyCacuPalete(false, myPalete),
         CacuKeys.Mul,
 
+        //=========================3
+        CacuKeys.ln.applyCacuPalete(false, myPalete),
+        CacuKeys.log10.applyCacuPalete(false, myPalete),
+        CacuKeys.factorial.applyCacuPalete(false, myPalete),
+        CacuKeys.e.applyCacuPalete(false, myPalete),
 
-        CacuKeys.Num(1).applyCacuPalete(false, myPalete),
-        CacuKeys.Num(1).applyCacuPalete(false, myPalete),
-        CacuKeys.Num(1).applyCacuPalete(false, myPalete),
-        CacuKeys.Num(1).applyCacuPalete(false, myPalete),
-        CacuKeys.Num(1).applyCacuPalete(false, myPalete),
-        CacuKeys.Num(1).applyCacuPalete(false, myPalete),
-        CacuKeys.Num(1).applyCacuPalete(false, myPalete),
-        CacuKeys.Num(1).applyCacuPalete(false, myPalete),
-        CacuKeys.Num(1).applyCacuPalete(false, myPalete),
+        CacuKeys.Num(4).applyCacuPalete(false, myPalete),
+        CacuKeys.Num(5).applyCacuPalete(false, myPalete),
+        CacuKeys.Num(6).applyCacuPalete(false, myPalete),
         CacuKeys.Reduce,
 
-        CacuKeys.Num(1).applyCacuPalete(false, myPalete),
-        CacuKeys.Num(1).applyCacuPalete(false, myPalete),
-        CacuKeys.Num(1).applyCacuPalete(false, myPalete),
-        CacuKeys.Num(1).applyCacuPalete(false, myPalete),
-        CacuKeys.Num(1).applyCacuPalete(false, myPalete),
-        CacuKeys.Num(1).applyCacuPalete(false, myPalete),
-        CacuKeys.Num(1).applyCacuPalete(false, myPalete),
-        CacuKeys.Num(1).applyCacuPalete(false, myPalete),
-        CacuKeys.Num(1).applyCacuPalete(false, myPalete),
-        CacuKeys.Plus,
+        //=============================4
+        CacuKeys.sin.applyCacuPalete(false, myPalete),
+        CacuKeys.cos.applyCacuPalete(false, myPalete),
+        CacuKeys.tan.applyCacuPalete(false, myPalete),
+        CacuKeys.pi.applyCacuPalete(false, myPalete),
 
         CacuKeys.Num(1).applyCacuPalete(false, myPalete),
-        CacuKeys.Num(1).applyCacuPalete(false, myPalete),
-        CacuKeys.Num(1).applyCacuPalete(false, myPalete),
-        CacuKeys.Num(1).applyCacuPalete(false, myPalete),
-        CacuKeys.Num(1).applyCacuPalete(false, myPalete),
-        CacuKeys.Num(1).applyCacuPalete(false, myPalete),
-        CacuKeys.Num(1).applyCacuPalete(false, myPalete),
-        CacuKeys.Num(1).applyCacuPalete(false, myPalete),
-        CacuKeys.Num(1).applyCacuPalete(false, myPalete),
+        CacuKeys.Num(2).applyCacuPalete(false, myPalete),
+        CacuKeys.Num(3).applyCacuPalete(false, myPalete),
+        CacuKeys.Plus,
+
+        //=======================================5
+        CacuKeys.sinh.applyCacuPalete(false, myPalete),
+        CacuKeys.cosh.applyCacuPalete(false, myPalete),
+        CacuKeys.tanh.applyCacuPalete(false, myPalete),
+        CacuKeys.rand.applyCacuPalete(false, myPalete),
+
+        CacuKeys.Num(0).also { it.spanCount = 2 }.applyCacuPalete(false, myPalete),
+        CacuKeys.Point.applyCacuPalete(false, myPalete),
         CacuKeys.Result,
-//        CacuKeys.C.applyCacuPalete(true, myPalete),
-//        CacuKeys.PlusOrReduce.applyCacuPalete(true, myPalete),
-//        CacuKeys.Percent.applyCacuPalete(true, myPalete),
-//        CacuKeys.Div,
-//
-//        CacuKeys.Num(7).applyCacuPalete(false, myPalete),
-//        CacuKeys.Num(8).applyCacuPalete(false, myPalete),
-//        CacuKeys.Num(9).applyCacuPalete(false, myPalete),
-//        CacuKeys.Mul,
-//
-//        CacuKeys.Num(4).applyCacuPalete(false, myPalete),
-//        CacuKeys.Num(5).applyCacuPalete(false, myPalete),
-//        CacuKeys.Num(6).applyCacuPalete(false, myPalete),
-//        CacuKeys.Reduce,
-//
-//        CacuKeys.Num(1).applyCacuPalete(false, myPalete),
-//        CacuKeys.Num(2).applyCacuPalete(false, myPalete),
-//        CacuKeys.Num(3).applyCacuPalete(false, myPalete),
-//        CacuKeys.Plus,
-//
-//        CacuKeys.Num(0, 2).applyCacuPalete(false, myPalete),
-//        CacuKeys.Point.applyCacuPalete(false, myPalete), CacuKeys.Result
     ).forEach {
         item(it.spanCount) {
             it.Show(modifier = Modifier.clickable {
@@ -117,7 +92,7 @@ fun SimpleHorizontalCacu(
 
     val myPalete = Local_MyPalete.current
 
-    MyGrid(10,
+    MyGrid(8,
         8,
         8,
         Modifier

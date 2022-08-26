@@ -7,10 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -63,6 +60,8 @@ private fun SimpleText(
     )
 }
 
+val Local_CacuKey_Text_Size = compositionLocalOf<TextUnit> { 10.sp }
+
 sealed class CacuKeys(
     val simpleText: String = "",
     var spanCount: Int = 1,
@@ -89,7 +88,8 @@ sealed class CacuKeys(
         ) {
             SimpleText(
                 text = simpleText,
-                color = colorState.textColor
+                color = colorState.textColor,
+                fontSize = Local_CacuKey_Text_Size.current
             )
         }
     }
@@ -158,35 +158,35 @@ sealed class CacuKeys(
 
     //+或者-
     object PlusOrReduce : CacuKeys(
-        "+/-",
+        "±",
         textColor = Color.Black,
         bgColor = Color(0xffA5A5A5)
     )
 
     //乘法
     object Mul : CacuKeys(
-        "x",
+        "×",
         textColor = Color.White,
         bgColor = Color(0xffFEA00A)
     )
 
     //除法
     object Div : CacuKeys(
-        "/",
+        "÷",
         textColor = Color.White,
         bgColor = Color(0xffFEA00A)
     )
 
     //求结果
     object Result : CacuKeys(
-        "=",
+        "＝",
         textColor = Color.White,
         bgColor = Color(0xffFEA00A)
     )
 
     //百分号
     object Percent : CacuKeys(
-        "%",
+        "％",
         textColor = Color.Black,
         bgColor = Color(0xffA5A5A5)
     )
@@ -220,16 +220,57 @@ sealed class CacuKeys(
         // 2 nd
         val nd2 = Text("2nd")
 
-        val x2  = Text("x^2")
-        val x3 = Text("x^3")
+        val x2  = Text("x²")
+        val x3 = Text("x³")
 
         val xy = Text("x^y")
-        val yx = Text("y^x")
+        val ex = Text("e^x")
+        val `10x` = Text("10^x")
         val `2x` = Text("2^x")
 
         //x分之1
         val `1Perx` = Text("1/x")
-        //x开2次根
+        //x开2次根 根号
+        val root2 = Text("2√文")
+        //x开3次根 根号
+        val root3 = Text("3√文")
+        //x开y次根 根号
+        val rooty = Text("y√文")
+        //对数 ln
+        val ln = Text("ln")
+        //log10
+        val log10 = Text("log10")
+        //阶乘
+        val factorial = Text("x!")
+        //sin
+        val sin = Text("sin")
+        //cos
+        val cos = Text("cos")
+        //tan
+        val tan = Text("tan")
+        //sinh
+        val sinh = Text("sinh")
+        //cosh
+        val cosh = Text("cosh")
+        //tanh
+        val tanh = Text("tanh")
+        //派 3.14.......
+        val pi = Text("π")
+        //随机数
+        val rand = Text("Rand")
+        //常数e
+        val e = Text("e")
+
+
+
+
+        //x! -> 表示阶乘 eg:  5! ==>  1*2*3*4*5
+
+        //次方:
+        //开方
+        //三角函数
+        //反三角函数 常数 派(3.14),随机数 阶乘
+
     }
 
 
