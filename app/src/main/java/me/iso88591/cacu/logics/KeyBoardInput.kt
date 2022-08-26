@@ -36,6 +36,9 @@ class KeyBoardInput {
     }
 
     fun emptyShow(): String {
+        if (num1 != 0.0){
+            return num1.trimEnd0()
+        }
         return "0"
     }
 

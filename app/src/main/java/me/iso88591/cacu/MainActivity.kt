@@ -6,7 +6,9 @@ import android.util.Log
 import android.widget.LinearLayout
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
@@ -41,17 +43,21 @@ class MainActivity : ComponentActivity() {
     private fun isVertical() =
         resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
 
+    val vm by viewModels<CacuVm>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 //        WindowCompat.setDecorFitsSystemWindows(window,true)
-        val isDarkState = mutableStateOf(true)
-        var isDark by isDarkState
-        val keyBoardInput = KeyBoardInput()
-        val input = KeyBoardUiInput(isDarkState,keyBoardInput) {
-        }
 
         setContent {
+
+            val isDark = isSystemInDarkTheme()
+            val input = remember {
+                vm.input
+            }.also {
+                it.darkLightState = isDark
+            }
 
             CacuTheme(isDark) {
                 // A surface container using the 'background' color from the theme
@@ -62,7 +68,7 @@ class MainActivity : ComponentActivity() {
                 ) {
 
                     var screenText by remember {
-                        mutableStateOf(keyBoardInput.emptyShow())
+                        mutableStateOf(vm.keyBoardInput.emptyShow())
                     }
 
                     CompositionLocalProvider(
@@ -89,9 +95,9 @@ class MainActivity : ComponentActivity() {
 
                                     VerticalScreen(text = screenText)
 
-                                    Button(onClick = { isDark = !isDark }) {
-                                        Text(text = "改变主题")
-                                    }
+//                                    Button(onClick = { isDark = !isDark }) {
+//                                        Text(text = "改变主题")
+//                                    }
 
                                 }
 
@@ -108,9 +114,9 @@ class MainActivity : ComponentActivity() {
 
                                     VerticalScreen(text = screenText)
 
-                                    Button(onClick = { isDark = !isDark }) {
-                                        Text(text = "改变主题")
-                                    }
+//                                    Button(onClick = { isDark = !isDark }) {
+//                                        Text(text = "改变主题")
+//                                    }
 
                                 }
 

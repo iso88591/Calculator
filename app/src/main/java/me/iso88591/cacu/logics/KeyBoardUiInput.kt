@@ -29,7 +29,7 @@ fun CacuKeys.isSingleOp():Boolean{
 }
 
 class KeyBoardUiInput(
-    private val darkLightState:State<Boolean>,
+    var darkLightState:Boolean,
     private val keyBoardInput: KeyBoardInput,
     private val onStateClear: () -> Unit
 ) {
@@ -45,7 +45,7 @@ class KeyBoardUiInput(
         if (lastOp.isOP()) {
             //如果是除了 +-*/以外的op 就用otherOp
             if (lastOp.isOtherOp()){
-                lastOp.colorState = CacuKeyColorState.Num.get(darkLightState.value)
+                lastOp.colorState = CacuKeyColorState.Num.get(darkLightState)
             }else{
                 lastOp.colorState = CacuKeyColorState.Op
             }
@@ -54,7 +54,7 @@ class KeyBoardUiInput(
         if (keyBoardInput.num2 == null) {
             //如果是除了 +-*/以外的op 就用otherOp
             if (keyBoardInput.opId.isOtherOp()){
-                keyBoardInput.opId.colorState = CacuKeyColorState.Num.get(darkLightState.value,true)
+                keyBoardInput.opId.colorState = CacuKeyColorState.Num.get(darkLightState,true)
             }else{
                 keyBoardInput.opId.colorState = CacuKeyColorState.OpCheck
             }
