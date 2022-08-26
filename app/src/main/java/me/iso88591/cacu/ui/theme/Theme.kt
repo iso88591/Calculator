@@ -63,16 +63,9 @@ fun CacuTheme(darkTheme: Boolean = isSystemInDarkTheme(),
             }
 
             CompositionLocalProvider(
-                Local_MyPalete provides if (darkTheme) {
-                    MyPalete().also {
-                        it.cacuNumButtonColor = CacuKeyColorState.Dark.Num
-                        it.cacuFuncButtonColor = CacuKeyColorState.Dark.Func
-                    }
-                } else {
-                    MyPalete().also {
-                        it.cacuNumButtonColor = CacuKeyColorState.Light.Num
-                        it.cacuFuncButtonColor = CacuKeyColorState.Light.Func
-                    }
+                Local_MyPalete provides MyPalete().also {
+                    it.cacuNumButtonColor = CacuKeyColorState.Num.get(darkTheme)
+                    it.cacuFuncButtonColor = CacuKeyColorState.Func.get(darkTheme)
                 }
             ) {
                 content()

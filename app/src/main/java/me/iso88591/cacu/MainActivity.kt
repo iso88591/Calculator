@@ -38,15 +38,17 @@ import me.iso88591.cacu.ui.theme.*
 
 class MainActivity : ComponentActivity() {
 
-    private fun isVertical() = resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+    private fun isVertical() =
+        resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 //        WindowCompat.setDecorFitsSystemWindows(window,true)
-        var isDark by mutableStateOf(true)
+        val isDarkState = mutableStateOf(true)
+        var isDark by isDarkState
         val keyBoardInput = KeyBoardInput()
-        val input = KeyBoardUiInput(keyBoardInput){
+        val input = KeyBoardUiInput(isDarkState,keyBoardInput) {
         }
 
         setContent {
@@ -65,9 +67,9 @@ class MainActivity : ComponentActivity() {
 
                     CompositionLocalProvider(
 
-                        Local_CacuKey_Text_Size provides if (isVertical()){
+                        Local_CacuKey_Text_Size provides if (isVertical()) {
                             30.sp
-                        }else{
+                        } else {
                             15.sp
                         }
 
@@ -77,7 +79,7 @@ class MainActivity : ComponentActivity() {
                             Modifier
                         ) {
 
-                            if (isVertical()){
+                            if (isVertical()) {
 
                                 Box(
                                     Modifier
@@ -96,7 +98,7 @@ class MainActivity : ComponentActivity() {
                                 SimpleVerticalCacu {
                                     screenText = input.onKeyDown(it)
                                 }
-                            }else{
+                            } else {
 
                                 Box(
                                     Modifier
@@ -112,7 +114,7 @@ class MainActivity : ComponentActivity() {
 
                                 }
 
-                                SimpleHorizontalCacu{
+                                SimpleHorizontalCacu {
                                     screenText = input.onKeyDown(it)
                                 }
                             }

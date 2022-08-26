@@ -1,16 +1,39 @@
 package me.iso88591.cacu.logics
 
+import androidx.compose.runtime.State
 import me.iso88591.cacu.ui.theme.CacuKeyColorState
 
+//需要两个数值参与的
+fun CacuKeys.isOP(): Boolean {
+    val it = this
+    return it is CacuKeys.Mul
+            || it is CacuKeys.Div
+            || it is CacuKeys.Plus
+            || it is CacuKeys.Reduce
+            || isOtherOp()
+}
+
+fun CacuKeys.isOtherOp():Boolean{
+    return this === CacuKeys.xy
+            || this === CacuKeys.rooty
+
+}
+
+fun CacuKeys.isSingleOp():Boolean{
+    return this === CacuKeys.x2
+            || this === CacuKeys.ex
+            || this === CacuKeys.`10x`
+            || this === CacuKeys.`1Perx`
+            || this === CacuKeys.root2
+            || this === CacuKeys.root3
+}
+
 class KeyBoardUiInput(
+    private val darkLightState:State<Boolean>,
     private val keyBoardInput: KeyBoardInput,
     private val onStateClear: () -> Unit
 ) {
 
-    private fun CacuKeys.isOP(): Boolean {
-        val it = this
-        return it is CacuKeys.Mul || it is CacuKeys.Div || it is CacuKeys.Plus || it is CacuKeys.Reduce
-    }
 
     fun onKeyDown(key: CacuKeys): String {
 
@@ -20,11 +43,21 @@ class KeyBoardUiInput(
 
         //clear lastop state
         if (lastOp.isOP()) {
-            lastOp.colorState = CacuKeyColorState.Op
+            //如果是除了 +-*/以外的op 就用otherOp
+            if (lastOp.isOtherOp()){
+                lastOp.colorState = CacuKeyColorState.Num.get(darkLightState.value)
+            }else{
+                lastOp.colorState = CacuKeyColorState.Op
+            }
         }
 
         if (keyBoardInput.num2 == null) {
-            keyBoardInput.opId.colorState = CacuKeyColorState.OpCheck
+            //如果是除了 +-*/以外的op 就用otherOp
+            if (keyBoardInput.opId.isOtherOp()){
+                keyBoardInput.opId.colorState = CacuKeyColorState.Num.get(darkLightState.value,true)
+            }else{
+                keyBoardInput.opId.colorState = CacuKeyColorState.OpCheck
+            }
         }
 
         //这里处理一下那些key的显示ui

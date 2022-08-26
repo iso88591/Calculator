@@ -3,6 +3,7 @@ package me.iso88591.cacu.logics
 import java.text.DecimalFormat
 import kotlin.math.pow
 import kotlin.math.roundToInt
+import kotlin.math.sqrt
 
 //计算逻辑
 class KeyBoardInput {
@@ -77,21 +78,6 @@ class KeyBoardInput {
                 })
             }
 
-            //这个case应该把所有的计算操作符放到一起来
-            CacuKeys.Plus, CacuKeys.Reduce, CacuKeys.Mul, CacuKeys.Div -> {
-
-                //更新操作符
-                if (num2 == null) {
-                    opId = key
-                    show = num1Str
-                } else {
-                    //有数字二 那么把上次结果算出来
-                    show = cacuAndClear()
-                    //然后将此次op覆盖上次op
-                    opId = key
-
-                }
-            }
             CacuKeys.Result -> {
                 //求结果
                 doWhenOp({
@@ -123,7 +109,7 @@ class KeyBoardInput {
                     show = num2Str
                 })
             }
-            CacuKeys.PlusOrReduce->{
+            CacuKeys.PlusOrReduce -> {
                 //正负号
                 doWhenOp({
                     num1 *= -1
@@ -137,49 +123,174 @@ class KeyBoardInput {
             }
             else -> {}
         }
+
+        //这个case应该把所有的计算操作符放到一起来
+        if (key.isOP()) {
+            //更新操作符
+            if (num2 == null) {
+                opId = key
+                show = num1Str
+            } else {
+                //有数字二 那么把上次结果算出来
+                show = cacuAndClear()
+                //然后将此次op覆盖上次op
+                opId = key
+
+            }
+        }
+        if (key.isSingleOp()) {
+            //可以通过一个数字和一个符号得出的 eg:     x的平方  当x值确定了 值就能确定
+            show = cacuSimpleOp(key)
+        }
         return show
     }
 
+
+    private fun clear() {
+        num1Str = num1.trimEnd0()
+        num2 = null
+        num2Str = ""
+        opId = OP_NULL
+        opId = OP_NULL
+    }
 
     private fun cacuAndClear(): String {
         var show = ""
         when (opId) {
             CacuKeys.Plus -> {
                 num1 += (num2 ?: 0.0)
-                num1Str = num1.trimEnd0()
-                num2 = null
-                num2Str = ""
-                opId = OP_NULL
-                opId = OP_NULL
+                clear()
                 show = num1Str
             }
             CacuKeys.Reduce -> {
                 num1 -= (num2 ?: 0.0)
-                num1Str = num1.trimEnd0()
-                num2 = null
-                num2Str = ""
-                opId = OP_NULL
+                clear()
                 show = num1Str
             }
             CacuKeys.Mul -> {
                 num1 *= (num2 ?: 0.0)
-                num1Str = num1.trimEnd0()
-                num2 = null
-                num2Str = ""
-                opId = OP_NULL
+                clear()
                 show = num1Str
             }
             CacuKeys.Div -> {
                 num1 /= (num2 ?: 0.0)
-                num1Str = num1.trimEnd0()
-                num2 = null
-                num2Str = ""
-                opId = OP_NULL
+                clear()
+                show = num1Str
+            }
+
+            /**
+             *
+             * 需要两个数字参与的 符号
+             *
+             */
+
+            CacuKeys.xy -> {
+                //x的y次方
+                num1 = num1.pow(num2 ?: 0.0)
+                clear()
+                show = num1Str
+            }
+            CacuKeys.rooty -> {
+                num1 = num1.pow(1 / (num2 ?: 0.0))
+                clear()
                 show = num1Str
             }
             else -> {
 
             }
+        }
+        return show
+    }
+
+
+    private fun cacuSimpleOp(key: CacuKeys): String {
+        var show = ""
+        when (key) {
+            /**
+             *
+             * 只需要一个数字参与的符号
+             *
+             */
+            CacuKeys.x2 -> {
+                doWhenOp({
+                    //将结果附加到第一个数字上
+                    num1 = num1.pow(2.0)
+                    clear()
+                    show = num1Str
+                }, {
+                    //将结果附加到第1个数字上
+                    num1 = (num2 ?: 0.0).pow(2.0)
+                    clear()
+                    show = num1Str
+                })
+            }
+            CacuKeys.ex -> {
+
+                doWhenOp({
+                    //将结果附加到第一个数字上
+                    num1 = Math.E.pow(num1)
+                    clear()
+                    show = num1Str
+                }, {
+                    //将结果附加到第1个数字上
+                    num1 = Math.E.pow((num2 ?: 0.0))
+                    clear()
+                    show = num1Str
+                })
+
+            }
+            CacuKeys.`10x` -> {
+                doWhenOp({
+                    //将结果附加到第一个数字上
+                    num1 = 10.0.pow(num1)
+                    clear()
+                    show = num1Str
+                }, {
+                    //将结果附加到第1个数字上
+                    num1 = 10.0.pow((num2 ?: 0.0))
+                    clear()
+                    show = num1Str
+                })
+
+            }
+            CacuKeys.`1Perx` -> {
+                doWhenOp({
+                    //将结果附加到第一个数字上
+                    num1 = 1f / num1
+                    clear()
+                    show = num1Str
+                }, {
+                    //将结果附加到第1个数字上
+                    num1 = 1f / (num2 ?: 0.0)
+                    clear()
+                    show = num1Str
+                })
+            }
+            //  || this === CacuKeys.root2
+            //            || this === CacuKeys.root3
+            CacuKeys.root2 -> {
+                doWhenOp({
+                    num1 = sqrt(num1)
+                    clear()
+                    show = num1Str
+                }, {
+                    num2 = sqrt(num2 ?: 0.0)
+                    clear()
+                    show = num1Str
+                })
+            }
+            CacuKeys.root3 -> {
+                doWhenOp({
+                    num1 = num1.pow(1 / 3.0)
+                    clear()
+                    show = num1Str
+                }, {
+                    num1 = (num2 ?: 0.0).pow(1 / 3.0)
+                    clear()
+                    show = num1Str
+                })
+            }
+            else -> error("")
         }
         return show
     }
