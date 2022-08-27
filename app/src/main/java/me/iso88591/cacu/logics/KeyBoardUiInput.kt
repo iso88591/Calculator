@@ -26,6 +26,18 @@ fun CacuKeys.isSingleOp():Boolean{
             || this === CacuKeys.`1Perx`
             || this === CacuKeys.root2
             || this === CacuKeys.root3
+            || this === CacuKeys.ln
+            || this === CacuKeys.log10
+            || this === CacuKeys.factorial
+            || this === CacuKeys.e
+            || this === CacuKeys.sin
+            || this === CacuKeys.cos
+            || this === CacuKeys.tan
+            || this === CacuKeys.pi
+            || this === CacuKeys.sinh
+            || this === CacuKeys.cosh
+            || this === CacuKeys.tanh
+            || this === CacuKeys.rand
 }
 
 class KeyBoardUiInput(
